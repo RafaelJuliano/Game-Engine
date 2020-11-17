@@ -41,31 +41,17 @@ public class Player extends Entity {
 	}
  //=============================================================//
 	
-	
 	/*======================================================+
 	|		MOVIMENTAÇÃO E ANIMAÇÃO DO PLAYER				|
 	+======================================================*/
 	public void tick() {
-		moved = false;
-		if(right) {
-			moved = true;
-			dir = true;
-			x+=speed;
-			
-			
-		}else if(left) {
-			moved = true;
-			dir = false;
-			x-=speed;
-		}
-		if(up) {
-			moved = true;
-			y-=speed;
-		}else if(down) {
-			moved = true;
-			y+=speed;
-		}
-		//LÓGICA DE ANIMAÇÃO
+				
+		x = right? x + speed: left? x - speed:x;
+		y = up? y - speed: down? y + speed: y;
+		moved = up||down||left||right? true:false;
+		dir = left? false:right?true:dir;
+		
+		//LÓGICA DE ANIMAÇÃO		
 		if(moved) {
 			frames++;
 			if(frames == maxFrames) {

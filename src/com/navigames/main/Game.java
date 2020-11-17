@@ -38,6 +38,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
     public static Spritesheet spritesheet;
     public static World world;
     public static Player player;
+    public static boolean left, right, up, down;
         
     /*==================================================+
     |===================================================|
@@ -174,11 +175,11 @@ public class Game extends Canvas implements Runnable, KeyListener{
                 delta--;
             }
             
-            if(System.currentTimeMillis() - timer >= 1000){
+            /*if(System.currentTimeMillis() - timer >= 1000){
                System.out.println("FPS: "+ frames);
                 frames = 0;
                 timer+= 1000;
-            }
+            }*/
         }
         stop();
     }
@@ -198,59 +199,51 @@ public class Game extends Canvas implements Runnable, KeyListener{
 			e.printStackTrace();
 		}
     }
-    //=====================================================//
-
 
 	/*=====================================================+
 	|	MÉTODOS DE LEITURA DE EVENTOS DO TECLADO		   |
 	+=====================================================*/
     
+    /*
+     * KEYCODES
+     * Direita = 39 D = 68
+     * Esquerda = 37 A = 65
+     * Cima = 38 W = 87
+     * Baixo = 40 S = 83
+     */
+    
     //QUANDO TECLA ESTÁ PRESSIONADA=====================================//
 	public void keyPressed(KeyEvent e) {
-		
-		//MOVIMENTO EIXO X-------------------------------------------------//
-		if(e.getKeyCode()== KeyEvent.VK_RIGHT || e.getKeyCode()== KeyEvent.VK_D) {
-			player.right = true;
-		}else if(e.getKeyCode()	== KeyEvent.VK_LEFT || e.getKeyCode()== KeyEvent.VK_A) {
+		if (e.getKeyCode() == 39||e.getKeyCode() == 68){
+			player.right = true;;
+		}else if (e.getKeyCode() == 37||e.getKeyCode() == 65) {
 			player.left = true;
 		}
-		//-------------------------------------------------------------------//
 		
-		//MOVIMENTO EIXO Y---------------------------------------------------//
-		if(e.getKeyCode()	== KeyEvent.VK_UP || e.getKeyCode()== KeyEvent.VK_W) {
+		if (e.getKeyCode() == 38||e.getKeyCode() == 87){
 			player.up = true;
-		}else if(e.getKeyCode()	== KeyEvent.VK_DOWN || e.getKeyCode()== KeyEvent.VK_S) {
+		}else if (e.getKeyCode() == 40||e.getKeyCode() == 83) {
 			player.down = true;
 		}
-		//-------------------------------------------------------------------//
 	}
 
-	//QUANDO SOLTA A TECLA===============================================//
+	//QUANDO SOLTA A TECLA===============================================//	
 	public void keyReleased(KeyEvent e) {
 		
-		//MOVIMENTO EIXO X-------------------------------------------------//
-		if(e.getKeyCode()== KeyEvent.VK_RIGHT || e.getKeyCode()== KeyEvent.VK_D) {
-			player.right = false;
-		}else if(e.getKeyCode()	== KeyEvent.VK_LEFT || e.getKeyCode()== KeyEvent.VK_A) {
+		if (e.getKeyCode() == 39||e.getKeyCode() == 68){
+			player.right = false;;
+		}else if (e.getKeyCode() == 37||e.getKeyCode() == 65) {
 			player.left = false;
 		}
-		//-------------------------------------------------------------------//
 		
-		//MOVIMENTO EIXO Y---------------------------------------------------//
-		if(e.getKeyCode()	== KeyEvent.VK_UP || e.getKeyCode()== KeyEvent.VK_W) {
+		if (e.getKeyCode() == 38||e.getKeyCode() == 87){
 			player.up = false;
-		}else if(e.getKeyCode()	== KeyEvent.VK_DOWN || e.getKeyCode()== KeyEvent.VK_S) {
+		}else if (e.getKeyCode() == 40||e.getKeyCode() == 83) {
 			player.down = false;
 		}
-		//-------------------------------------------------------------------//
 	}
 
 	
-	public void keyTyped(KeyEvent e) {
-		
-		
-	}
-    //=====================================================//
+	public void keyTyped(KeyEvent e) {}
+	
 }
-
-
