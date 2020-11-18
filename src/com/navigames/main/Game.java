@@ -47,19 +47,17 @@ public class Game extends Canvas implements Runnable, KeyListener{
         spritesheet = new Spritesheet("/spritesheet.png");        
         player = new Player(0, 0, 16, 16,spritesheet.getSprite(32, 0, 16, 16));
         world = new World("/map.png");        
-        entities.add(player);
-        
-    
+        entities.add(player);    
     }
 
     public void initFrame(){
         frame = new JFrame("Jogo"); //
-        frame.add(this); // puxa propriedades canvas
-        frame.setResizable(false); // bloqueia reajuste de janela
-        frame.pack(); //calcula dimensoes
-        frame.setLocationRelativeTo(null); //janela no centro
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // para método quando fecha janela
-        frame.setVisible(true); // deixa visivel quando inicia
+        frame.add(this);
+        frame.setResizable(false);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 
     public synchronized void start(){
@@ -71,16 +69,14 @@ public class Game extends Canvas implements Runnable, KeyListener{
     public void tick(){    	
         for(int i = 0; i < entities.size(); i++) {
         	Entity e = entities.get(i);
-        	e.tick();
-        	
-        	
+        	e.tick();        	
         }
     }
 
 	public void render(){
-    	BufferStrategy bs = this.getBufferStrategy(); //metodo renderiza graficos
-		if(bs == null) { // se buffer não existe 
-			this.createBufferStrategy(3); //crie um buffer = 3
+    	BufferStrategy bs = this.getBufferStrategy();
+		if(bs == null) {
+			this.createBufferStrategy(3);
 			return;
 		}
 		Graphics g = image.getGraphics();
@@ -102,8 +98,6 @@ public class Game extends Canvas implements Runnable, KeyListener{
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
-        int frames = 0;
-        double timer = System.currentTimeMillis();
         while(isRunning){
             long now = System.nanoTime();
             delta+= (now - lastTime) / ns;
@@ -111,15 +105,8 @@ public class Game extends Canvas implements Runnable, KeyListener{
             if(delta >= 1){
                 tick();
                 render();
-                frames++;
                 delta--;
             }
-            
-            /*if(System.currentTimeMillis() - timer >= 1000){
-               System.out.println("FPS: "+ frames);
-                frames = 0;
-                timer+= 1000;
-            }*/
         }
         stop();
     }
