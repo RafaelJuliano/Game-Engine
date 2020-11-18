@@ -44,8 +44,7 @@ public class Player extends Entity {
 	/*======================================================+
 	|		MOVIMENTAÇÃO E ANIMAÇÃO DO PLAYER				|
 	+======================================================*/
-	public void tick() {
-				
+	public void tick() {				
 		x = right? x + speed: left? x - speed:x;
 		y = up? y - speed: down? y + speed: y;
 		moved = up||down||left||right? true:false;

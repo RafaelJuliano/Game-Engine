@@ -1,8 +1,5 @@
 package com.navigames.main;
 
- /*=====================================================+
- |             IMPORT DE PACOTES JAVA					|
- +=====================================================*/
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,13 +16,8 @@ import com.navigames.entities.Player;
 import com.navigames.graficos.Spritesheet;
 import com.navigames.world.World;
 
-//=============	CRIAÇÃO DA CLASSE =======================//
 public class Game extends Canvas implements Runnable, KeyListener{
-//=======================================================//  
-	
-  /*==================================================+
-  |				   		VARIÁVEIS 	         		  |
-  +==================================================*/
+
 	private static final long serialVersionUID = 1L;
 	public static JFrame frame;
     private Thread thread;
@@ -40,22 +32,12 @@ public class Game extends Canvas implements Runnable, KeyListener{
     public static Player player;
     public static boolean left, right, up, down;
         
-    /*==================================================+
-    |===================================================|
-    |				MÉTODO PRINCIPAL					|
-    |===================================================|
-    +==================================================*/
+
     public static void main(String[] args) {
         Game main = new Game();
         main.start();
 	}
-    //==================================================//
-    //==================================================//
-    
-    
-    /*==================================================+
-    |	  			MÉTODO CONSTRUTOR				    |
-    +==================================================*/
+
     public Game(){
     	addKeyListener(this);
         setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE)); //CRIA DIMENÇÕES DA JANELA
@@ -69,13 +51,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
         
     
     }
-    //==================================================//
-    
-    
-    
-    /*====================================================+
-    |			MÉTODO CRIAÇÃO DE JANELA				  |
-    +====================================================*/
+
     public void initFrame(){
         frame = new JFrame("Jogo"); //
         frame.add(this); // puxa propriedades canvas
@@ -85,26 +61,13 @@ public class Game extends Canvas implements Runnable, KeyListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // para método quando fecha janela
         frame.setVisible(true); // deixa visivel quando inicia
     }
-    //=====================================================//
-    
-    
-    
-    /*======================================================+
-    |			MÉTODO DE INICIALIZAÇÃO DE THREADS			|
-    +======================================================*/
+
     public synchronized void start(){
         thread = new Thread(this);
         isRunning = true;
         thread.start();
     }
-    //=====================================================//
-    
-       
-    
-    
-    /*=========================================================+
-    |		MÉTODO DE EXECUÇÃO DE LÓGICA DE CLASSES			   |
-    +=========================================================*/
+
     public void tick(){    	
         for(int i = 0; i < entities.size(); i++) {
         	Entity e = entities.get(i);
@@ -113,13 +76,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
         	
         }
     }
-    //=====================================================//
-    
-    
-    
-    /*==========================================================+
-    |	RENDERIZAÇÃO DE GRAFICOS APÓS EXECUÇÃO DE LÓGICA		|
-    +==========================================================*/
+
 	public void render(){
     	BufferStrategy bs = this.getBufferStrategy(); //metodo renderiza graficos
 		if(bs == null) { // se buffer não existe 
@@ -127,36 +84,19 @@ public class Game extends Canvas implements Runnable, KeyListener{
 			return;
 		}
 		Graphics g = image.getGraphics();
-		//FUNDO PRETO
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		
-		//Graphics2D g2 = (Graphics2D) g;
-		
-		//RENDERIZA ENTITIES
 		world.render(g);
 		for(int i = 0; i < entities.size(); i++) {
         	Entity e = entities.get(i);          	
         	e.render(g);
 		}
-		
-		
-		//LIMPA A TELA
 		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);		
-		bs.show();
-		
-		
-		
+		bs.show();		
     }
-    //=====================================================//
-	
-	
-	
-    /*======================================================+
-    |				MÉTODO DE LOOPING 						|
-    +======================================================*/
+
     public void run(){
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -183,14 +123,6 @@ public class Game extends Canvas implements Runnable, KeyListener{
         }
         stop();
     }
-    //=====================================================//    
-    
-    
-    
-    /*=======================================================+
-    |					MÉTODO DE PARADA                     |
-    +=======================================================*/
-    //Força parada de threads caso o saia do Loop		
     public synchronized void stop(){
     	isRunning = false;
         try {
@@ -200,50 +132,24 @@ public class Game extends Canvas implements Runnable, KeyListener{
 		}
     }
 
-	/*=====================================================+
-	|	MÉTODOS DE LEITURA DE EVENTOS DO TECLADO		   |
-	+=====================================================*/
-    
-    /*
-     * KEYCODES
-     * Direita = 39 D = 68
-     * Esquerda = 37 A = 65
-     * Cima = 38 W = 87
-     * Baixo = 40 S = 83
-     */
-    
-    //QUANDO TECLA ESTÁ PRESSIONADA=====================================//
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == 39||e.getKeyCode() == 68){
-			player.right = true;;
-		}else if (e.getKeyCode() == 37||e.getKeyCode() == 65) {
-			player.left = true;
-		}
-		
-		if (e.getKeyCode() == 38||e.getKeyCode() == 87){
-			player.up = true;
-		}else if (e.getKeyCode() == 40||e.getKeyCode() == 83) {
-			player.down = true;
-		}
+		int code = e.getKeyCode();		
+		player.right |= code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D;
+		player.left |= code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A;
+		player.up |= code == KeyEvent.VK_UP || code == KeyEvent.VK_W;
+		player.down |= code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S;
 	}
 
-	//QUANDO SOLTA A TECLA===============================================//	
+
 	public void keyReleased(KeyEvent e) {
-		
-		if (e.getKeyCode() == 39||e.getKeyCode() == 68){
-			player.right = false;;
-		}else if (e.getKeyCode() == 37||e.getKeyCode() == 65) {
-			player.left = false;
-		}
-		
-		if (e.getKeyCode() == 38||e.getKeyCode() == 87){
-			player.up = false;
-		}else if (e.getKeyCode() == 40||e.getKeyCode() == 83) {
-			player.down = false;
-		}
+		int code = e.getKeyCode();		
+		player.right = code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D? false:player.right;
+		player.left = code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A? false:player.left;
+		player.up = code == KeyEvent.VK_UP || code == KeyEvent.VK_W? false:player.up;
+		player.down = code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S? false:player.down;
 	}
-
 	
 	public void keyTyped(KeyEvent e) {}
+	
 	
 }
