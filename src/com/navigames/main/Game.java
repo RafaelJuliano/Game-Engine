@@ -53,7 +53,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
     public void initFrame(){
         frame = new JFrame("Jogo"); //
         frame.add(this);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,6 +79,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
 			this.createBufferStrategy(3);
 			return;
 		}
+		
 		Graphics g = image.getGraphics();
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -87,27 +88,27 @@ public class Game extends Canvas implements Runnable, KeyListener{
         	Entity e = entities.get(i);          	
         	e.render(g);
 		}
+		
 		g.dispose();
 		g = bs.getDrawGraphics();
-		g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);		
+		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), null);	
+			
 		bs.show();		
     }
 
     public void run(){
-        long lastTime = System.nanoTime();
-        double amountOfTicks = 60.0;
-        double ns = 1000000000 / amountOfTicks;
-        double delta = 0;
-        while(isRunning){
-            long now = System.nanoTime();
-            delta+= (now - lastTime) / ns;
-            lastTime = now;
-            if(delta >= 1){
-                tick();
-                render();
-                delta--;
-            }
-        }
+		long lastTime = System.nanoTime();
+		double frameRate = 60.0;
+		double nanosPerFrame = 1000000000 / frameRate;
+		while(isRunning) {
+			long now = System.nanoTime();
+			if ((now - lastTime)/nanosPerFrame>=1) {
+				lastTime = now;
+				tick();
+				render();
+			}
+
+		}
         stop();
     }
     public synchronized void stop(){
