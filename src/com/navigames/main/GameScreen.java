@@ -29,6 +29,14 @@ public class GameScreen extends Canvas {
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	}
 
+	/**
+	    * Inicia a janela do jogo.
+	    * As dimensões da janela são definidas no método construtor da classe;
+	    * A sua posição padrão é no centro da tela;
+	    * Seu tamanho pode ser alterado;
+	    * É visivel desde sua execução;
+	    * Ao ser fechada encerra o programa;
+	    */
 	public void initFrame() {
 		frame = new JFrame("Jogo"); //
 		frame.add(this);
@@ -38,7 +46,12 @@ public class GameScreen extends Canvas {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
-
+	
+	/**
+	/ Renderiza as imagens utilizando BufferStrategy.
+	* A tela é primeiro desenhada no objeto image que recebe as dimensões padrões de game.
+	* Então a imagem é redenrizada responsivamente pelo objeto bs.
+	*/
 	public void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
