@@ -4,8 +4,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ import com.navigames.entities.Player;
 import com.navigames.graficos.Spritesheet;
 import com.navigames.world.World;
 
-public class Game extends Canvas implements Runnable, KeyListener{
+public class Game extends Canvas implements Runnable{
 
 	private static final long serialVersionUID = 1L;
 	public static JFrame frame;
@@ -31,6 +29,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
     public static World world;
     public static Player player;
     public static boolean left, right, up, down;
+    public GameInput input;
         
 
     public static void main(String[] args) {
@@ -39,7 +38,8 @@ public class Game extends Canvas implements Runnable, KeyListener{
 	}
 
     public Game(){
-    	addKeyListener(this);
+    	input = new GameInput();
+    	addKeyListener(input);
         setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE)); //CRIA DIMENÇÕES DA JANELA
         initFrame();// #MÉTODO DE CRIAÇÃO DE JANELA
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -120,24 +120,6 @@ public class Game extends Canvas implements Runnable, KeyListener{
 		}
     }
 
-	public void keyPressed(KeyEvent e) {
-		int code = e.getKeyCode();		
-		player.right |= code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D;
-		player.left |= code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A;
-		player.up |= code == KeyEvent.VK_UP || code == KeyEvent.VK_W;
-		player.down |= code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S;
-	}
 
-
-	public void keyReleased(KeyEvent e) {
-		int code = e.getKeyCode();		
-		player.right = code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D? false:player.right;
-		player.left = code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A? false:player.left;
-		player.up = code == KeyEvent.VK_UP || code == KeyEvent.VK_W? false:player.up;
-		player.down = code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S? false:player.down;
-	}
-	
-	public void keyTyped(KeyEvent e) {}
-	
 	
 }
