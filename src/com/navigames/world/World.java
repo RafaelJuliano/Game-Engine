@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import com.navigames.entities.*;
 import com.navigames.main.Game;
+import com.navigames.main.GameScreen;
 
 public class World {
 
@@ -49,8 +50,8 @@ public class World {
 	public void render(Graphics g) {
 		int xstart = Camera.x/16;
 		int ystart = Camera.y/16;
-		int xfinal = xstart + Game.WIDTH/16;
-		int yfinal = ystart + Game.HEIGHT/16;
+		int xfinal = xstart + GameScreen.WIDTH/16;
+		int yfinal = ystart + GameScreen.HEIGHT/16;
 		for (int xx = xstart; xx <= xfinal; xx ++) {
 			for (int yy = ystart; yy <= yfinal; yy ++) {
 				if(xx < 0 || yy < 0 || xx >= WIDTH || yy >= HEIGHT) 

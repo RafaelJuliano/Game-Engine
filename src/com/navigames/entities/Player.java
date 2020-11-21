@@ -3,6 +3,7 @@ package com.navigames.entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import com.navigames.main.Game;
+import com.navigames.main.GameScreen;
 import com.navigames.world.World;
 
 public class Player extends Entity {
@@ -43,8 +44,8 @@ public class Player extends Entity {
 					index = 0;
 			}
 		}
-		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH*16 - Game.WIDTH);
-		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT*16 - Game.HEIGHT);
+		Camera.x = Camera.clamp(this.getX() - (GameScreen.WIDTH/2), 0, World.WIDTH*16 - GameScreen.WIDTH);
+		Camera.y = Camera.clamp(this.getY() - (GameScreen.HEIGHT/2), 0, World.HEIGHT*16 - GameScreen.HEIGHT);
 	}
 
 	public void render(Graphics g) {

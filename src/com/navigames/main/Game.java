@@ -1,35 +1,24 @@
 package com.navigames.main;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 import com.navigames.entities.Entity;
 import com.navigames.entities.Player;
 import com.navigames.graficos.Spritesheet;
 import com.navigames.world.World;
 
-public class Game extends Canvas implements Runnable{
+public class Game implements Runnable{
 
-	private static final long serialVersionUID = 1L;
-	public static JFrame frame;
-    private Thread thread;
+	private Thread thread;
     private boolean isRunning = true;
-    public static final int WIDTH = 240;
-    public static final int HEIGHT = 160;
-    private final int SCALE = 3;    
-    private BufferedImage image;
+    
+    
     public static List<Entity> entities;
     public static Spritesheet spritesheet;
     public static World world;
     public static Player player;
     public static boolean left, right, up, down;
-    public GameInput input;
+    public GameScreen screen;    
         
 
     public static void main(String[] args) {
@@ -38,27 +27,16 @@ public class Game extends Canvas implements Runnable{
 	}
 
     public Game(){
-    	input = new GameInput();
-    	addKeyListener(input);
-        setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE)); //CRIA DIMENÇÕES DA JANELA
-        initFrame();// #MÉTODO DE CRIAÇÃO DE JANELA
-        image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    	screen = new GameScreen();
+        screen.initFrame();        
         entities = new ArrayList<Entity>();         
         spritesheet = new Spritesheet("/spritesheet.png");        
         player = new Player(0, 0, 16, 16,spritesheet.getSprite(32, 0, 16, 16));
         world = new World("/map.png");        
-        entities.add(player);    
-    }
+        entities.add(player);   
+        }
 
-    public void initFrame(){
-        frame = new JFrame("Jogo"); //
-        frame.add(this);
-        frame.setResizable(true);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
+ 
 
     public synchronized void start(){
         thread = new Thread(this);
@@ -71,30 +49,7 @@ public class Game extends Canvas implements Runnable{
         	Entity e = entities.get(i);
         	e.tick();        	
         }
-    }
-
-	public void render(){
-    	BufferStrategy bs = this.getBufferStrategy();
-		if(bs == null) {
-			this.createBufferStrategy(3);
-			return;
-		}
-		
-		Graphics g = image.getGraphics();
-		g.setColor(new Color(0, 0, 0));
-		g.fillRect(0, 0, WIDTH, HEIGHT);
-		world.render(g);
-		for(int i = 0; i < entities.size(); i++) {
-        	Entity e = entities.get(i);          	
-        	e.render(g);
-		}
-		
-		g.dispose();
-		g = bs.getDrawGraphics();
-		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), null);	
-			
-		bs.show();		
-    }
+    }	
 
     public void run(){
 		long lastTime = System.nanoTime();
@@ -105,12 +60,13 @@ public class Game extends Canvas implements Runnable{
 			if ((now - lastTime)/nanosPerFrame>=1) {
 				lastTime = now;
 				tick();
-				render();
+				screen.render();
 			}
 
 		}
         stop();
     }
+    
     public synchronized void stop(){
     	isRunning = false;
         try {
