@@ -3,11 +3,11 @@ package com.navigames.entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import com.navigames.main.Game;
+import com.navigames.main.GameInput;
 import com.navigames.main.GameScreen;
 import com.navigames.world.World;
 
 public class Player extends Entity {
-	public boolean right, up, left, down;
 	public double speed = 0.9;
 	private boolean dir = true;
 	private boolean moved = false;
@@ -28,13 +28,29 @@ public class Player extends Entity {
 		}
 	}
 
-	public void tick() {
-		x = right ? x + speed : left ? x - speed : x;
-		y = up ? y - speed : down ? y + speed : y;
-		moved = up || down || left || right ? true : false;
-		dir = left ? false : right ? true : dir;
+	private void move() {
+		if (GameInput.isRight) {
+			x += speed;
+		} else if (GameInput.isLeft) {
+			x -= speed;
+		}
 
-		// LÓGICA DE ANIMAÇÃO
+		if (GameInput.isUp) {
+			y -= speed;
+		} else if (GameInput.isDown) {
+			y += speed;
+		}
+	}
+
+	private void animate() {
+		dir = GameInput.isRight ? true : GameInput.isLeft? false:dir;
+
+		if (GameInput.isRight || GameInput.isLeft || GameInput.isUp || GameInput.isDown) {
+			moved = true;
+		} else {
+			moved = false;
+		}
+
 		if (moved) {
 			frames++;
 			if (frames == maxFrames) {
@@ -44,6 +60,14 @@ public class Player extends Entity {
 					index = 0;
 			}
 		}
+	}
+
+	public void tick() {
+		move();
+		animate();
+
+		// LÓGICA DE ANIMAÇÃO
+
 		Camera.x = Camera.clamp(this.getX() - (GameScreen.WIDTH / 2), 0, World.WIDTH * 16 - GameScreen.WIDTH);
 		Camera.y = Camera.clamp(this.getY() - (GameScreen.HEIGHT / 2), 0, World.HEIGHT * 16 - GameScreen.HEIGHT);
 	}

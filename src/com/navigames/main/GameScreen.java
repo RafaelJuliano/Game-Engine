@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 
 public class GameScreen extends Canvas {
 
-	public GameInput input;
+	
 	public static JFrame frame;
 	private BufferedImage image;
 
@@ -23,9 +23,9 @@ public class GameScreen extends Canvas {
 	private static final long serialVersionUID = 1L;
 
 	public GameScreen() {
-		input = new GameInput();
+		
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		addKeyListener(input);
+		addKeyListener(Game.input);
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	}
 

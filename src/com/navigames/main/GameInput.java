@@ -3,7 +3,11 @@ package com.navigames.main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+
+
 public class GameInput implements KeyListener {
+	
+	public static boolean isRight, isLeft, isUp, isDown = false;
 	
 	/**
 	* Identifica quando uma tecla é pressionada e torna verdadeira a respectiva condição apra execução da
@@ -15,10 +19,10 @@ public class GameInput implements KeyListener {
 	*/
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		Game.player.right |= code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D;
-		Game.player.left |= code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A;
-		Game.player.up |= code == KeyEvent.VK_UP || code == KeyEvent.VK_W;
-		Game.player.down |= code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S;
+		isRight |= code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D;
+		isLeft |= code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A;
+		isUp |= code == KeyEvent.VK_UP || code == KeyEvent.VK_W;
+		isDown |= code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S;
 	}
 
 	/**
@@ -30,10 +34,10 @@ public class GameInput implements KeyListener {
 	*/
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
-		Game.player.right = code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D ? false : Game.player.right;
-		Game.player.left = code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A ? false : Game.player.left;
-		Game.player.up = code == KeyEvent.VK_UP || code == KeyEvent.VK_W ? false : Game.player.up;
-		Game.player.down = code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S ? false : Game.player.down;
+		isRight = code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D ? false : isRight;
+		isLeft = code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A ? false : isLeft;
+		isUp = code == KeyEvent.VK_UP || code == KeyEvent.VK_W ? false : isUp;
+		isDown = code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S ? false : isDown;
 	}
 
 	public void keyTyped(KeyEvent e) {

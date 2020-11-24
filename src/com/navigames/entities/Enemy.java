@@ -16,8 +16,8 @@ public class Enemy extends Entity {
 			enemySprite[i] = Game.spritesheet.getSprite(2*16+(i*16), 2*16, 16, 16);
 		}
 	}
-
-	public void tick() {
+	
+	private void animate() {
 		frames++;
 		if(frames == maxFrames) {
 			frames = 0;
@@ -25,6 +25,10 @@ public class Enemy extends Entity {
 			if(index > maxIndex)
 				index = 0;
 		}
+	}
+
+	public void tick() {
+		animate();
 	}
 	public void render(Graphics g) {		
 			g.drawImage(enemySprite[index], this.getX()-Camera.x, this.getY()-Camera.y, null);

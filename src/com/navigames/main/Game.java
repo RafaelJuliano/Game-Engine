@@ -21,6 +21,7 @@ public class Game implements Runnable {
 	public static World world;
 	public static Player player;
 	public GameScreen screen;
+	public static GameInput input;
 
 	public static void main(String[] args) {
 		Game main = new Game();
@@ -28,6 +29,7 @@ public class Game implements Runnable {
 	}
 
 	public Game() {
+		input = new GameInput();
 		screen = new GameScreen();
 		screen.initFrame();
 		entities = new ArrayList<Entity>();
