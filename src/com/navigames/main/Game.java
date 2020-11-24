@@ -7,6 +7,11 @@ import com.navigames.entities.Player;
 import com.navigames.graficos.Spritesheet;
 import com.navigames.world.World;
 
+/**
+ * A classe Game é responsável por instanciar os principais objetos do jogo, executar o loop e chamar os métodos
+ * lógicos de cada objeto.
+ * @author Rafael
+ */
 public class Game implements Runnable {
 
 	private Thread thread;
