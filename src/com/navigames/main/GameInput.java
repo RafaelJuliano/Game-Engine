@@ -4,7 +4,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 
-
+/**
+ * Identifica eventos do teclado e os registra em variáveis lógicas públicas.
+ * @author Rafael Juliano Ferreira
+ *
+ */
 public class GameInput implements KeyListener {
 	
 	public static boolean isRight, isLeft, isUp, isDown = false;

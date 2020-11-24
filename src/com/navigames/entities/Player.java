@@ -7,6 +7,11 @@ import com.navigames.main.GameInput;
 import com.navigames.main.GameScreen;
 import com.navigames.world.World;
 
+/**
+ * Responável pela lógica e renderização da entidade controlada pelo jogador.
+ * @author Rafael Juliano Ferreira
+ *
+ */
 public class Player extends Entity {
 	public double speed = 0.9;
 	private boolean direcao = true;
@@ -14,10 +19,17 @@ public class Player extends Entity {
 	private int frames = 0, maxFrames = 12, index = 0, maxIndex = 3;
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
-
+	
+	/**
+	 * 
+	 * @param x Posição inicial no eixo x
+	 * @param y Posição inicial no eixo y
+	 * @param width Largura do sprite
+	 * @param height Altura do sprite
+	 * @param sprite Imagem da renderização inicial.
+	 */
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
-
 		rightPlayer = new BufferedImage[4];
 		leftPlayer = new BufferedImage[4];
 		for (int i = 0; i < 4; i++) {
@@ -27,6 +39,7 @@ public class Player extends Entity {
 			leftPlayer[i] = Game.spritesheet.getSprite(32 + (i * 16), 0, 16, 16);
 		}
 	}
+	
 	/**
 	 * Utiliza as variáveis lógicas da classe GameInput para movimentar o player nos eixos x e y
 	 * de acordo com a velociade declarada no atributo speed.
@@ -37,7 +50,6 @@ public class Player extends Entity {
 		} else if (GameInput.isLeft) {
 			x -= speed;
 		}
-
 		if (GameInput.isUp) {
 			y -= speed;
 		} else if (GameInput.isDown) {
@@ -72,7 +84,7 @@ public class Player extends Entity {
 	}
 	
 	/**
-	 * 
+	 * Define posição da camera do jogo.
 	 */
 	public void moveCamera() {
 		Camera.x = Camera.clamp(this.getX() - (GameScreen.WIDTH / 2), 0, World.WIDTH * 16 - GameScreen.WIDTH);
@@ -87,9 +99,11 @@ public class Player extends Entity {
 		animate();
 		moveCamera();
 	}
-	 /**
-	  * Desenha o sprite do player na variável image da classe GameScreen
-	  */
+	
+	/**
+	 * Desenha o sprite do player na variável image da classe GameScreen.
+	 * @param g BufferedImage a qual o sprite é renderizado.
+	 */
 	public void render(Graphics g) {
 		if (direcao) {
 			g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);

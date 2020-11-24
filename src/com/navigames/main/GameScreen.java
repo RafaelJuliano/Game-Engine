@@ -10,20 +10,24 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+/**
+ * Cria a janela do jogo e renderiza todos os sprites.
+ * @author Rafael Juliano Ferreira
+ */
 public class GameScreen extends Canvas {
-
-	
 	public static JFrame frame;
 	private BufferedImage image;
-
 	public static final int WIDTH = 240;
 	public static final int HEIGHT = 160;
 	public final static int SCALE = 3;
-
 	private static final long serialVersionUID = 1L;
-
-	public GameScreen() {
-		
+	
+	/**
+	 * Define as dimensões padrões da janela.
+	 * Adiciona o obejto input como KeyLestener.
+	 * Instancia a BufferedImage que receberá os sprites do mapa e entidades.
+	 */
+	public GameScreen() {		
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		addKeyListener(Game.input);
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -48,7 +52,7 @@ public class GameScreen extends Canvas {
 	}
 	
 	/**
-	/ Renderiza as imagens utilizando BufferStrategy.
+	*Renderiza as imagens utilizando BufferStrategy.
 	* A tela é primeiro desenhada no objeto image que recebe as dimensões padrões de game.
 	* Então a imagem é redenrizada responsivamente pelo objeto bs.
 	*/
