@@ -66,10 +66,10 @@ public class Game implements Runnable {
 	/**
 	 * Responsavel por chamar os ,métodos de atualização de cada entidade.
 	 */
-	public void tick() {
+	public void update() {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
-			e.tick();
+			e.update();
 		}
 	}
 
@@ -87,7 +87,7 @@ public class Game implements Runnable {
 			long now = System.nanoTime();
 			if ((now - lastTime) / nanosPerFrame >= 1) {
 				lastTime = now;
-				tick();
+				update();
 				screen.render();
 			}
 		}
