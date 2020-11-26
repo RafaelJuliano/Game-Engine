@@ -2,6 +2,9 @@ package com.navigames.entities;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import javax.xml.crypto.Data;
+
 import com.navigames.main.Game;
 import com.navigames.main.GameInput;
 import com.navigames.main.GameScreen;
@@ -20,7 +23,10 @@ public class Player extends Entity {
 	private int frames = 0, maxFrames = 12, index = 0, maxIndex = 3;
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
+	private BufferedImage[] rightDmgPlayer;
+	private BufferedImage[] leftDmgPlayer;
 	private boolean isRFree, isLFree, isUFree, isDFree;
+	private int life = 10, cooldown = 0, damage = 0;
 
 	/**
 	 * 
@@ -34,11 +40,19 @@ public class Player extends Entity {
 		super(x, y, width, height, sprite);
 		rightPlayer = new BufferedImage[4];
 		leftPlayer = new BufferedImage[4];
+		rightDmgPlayer = new BufferedImage[4];
+		leftDmgPlayer = new BufferedImage[4];
 		for (int i = 0; i < 4; i++) {
 			rightPlayer[i] = Game.spritesheet.getSprite(32 + (i * 16), 16, World.D_SIZE, World.D_SIZE);
 		}
 		for (int i = 0; i < 4; i++) {
 			leftPlayer[i] = Game.spritesheet.getSprite(32 + (i * 16), 0, World.D_SIZE, World.D_SIZE);
+		}
+		for (int i = 0; i < 4; i++) {
+			leftDmgPlayer[i] = Game.spritesheet.getSprite(32 + (i * 16), 80, World.D_SIZE, World.D_SIZE);
+		}
+		for (int i = 0; i < 4; i++) {
+			rightDmgPlayer[i] = Game.spritesheet.getSprite(32 + (i * 16), 96, World.D_SIZE, World.D_SIZE);
 		}
 	}
 
@@ -68,6 +82,25 @@ public class Player extends Entity {
 			y -= speed;
 		} else if (GameInput.isDown && isDFree) {
 			y += speed;
+		}
+	}
+		
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+	
+	private void damage() {
+		if (cooldown <= 0) {
+			if (damage > 0) {
+				life -= damage;
+				damage = 0;
+				System.out.println(life);
+				System.out.println(damage);
+				cooldown = 120;
+			}
+		}else {
+			cooldown--;
+			damage = 0;
 		}
 	}
 
@@ -112,6 +145,10 @@ public class Player extends Entity {
 		moveCamera();
 		arround();
 		move();
+		damage();
+		if (life == 0) {
+			System.exit(1);
+		}
 	}
 
 	/**
@@ -120,9 +157,17 @@ public class Player extends Entity {
 	 */
 	public void render(Graphics g) {
 		if (direcao) {
-			g.drawImage(rightPlayer[index], Camera.posX(this.getX()), Camera.posY(this.getY()), null);
+			if (cooldown > 0) {
+				g.drawImage(rightDmgPlayer[index], Camera.posX(this.getX()), Camera.posY(this.getY()), null);
+			}else {
+				g.drawImage(rightPlayer[index], Camera.posX(this.getX()), Camera.posY(this.getY()), null);
+			}
 		} else if (direcao == false) {
-			g.drawImage(leftPlayer[index], Camera.posX(this.getX()), Camera.posY(this.getY()), null);
+			if (cooldown > 0) {
+				g.drawImage(leftDmgPlayer[index], Camera.posX(this.getX()), Camera.posY(this.getY()), null);
+			}else {
+				g.drawImage(leftPlayer[index], Camera.posX(this.getX()), Camera.posY(this.getY()), null);
+			}
 		}
 	}
 }

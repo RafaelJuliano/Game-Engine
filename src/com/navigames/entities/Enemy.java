@@ -73,18 +73,33 @@ public class Enemy extends Entity {
 		return false;
 	}
 	
+	/**
+	 * Verifica colisão com o player e sinaliza ataque do inimigo.
+	 * @return Se está colidindo.
+	 */
+	public boolean isCollidingWithPlayer() {
+		int w = World.D_SIZE - 5;
+		int h = World.D_SIZE;
+		Rectangle enemy = new Rectangle(this.getX(), this.getY(), w, h);
+		Rectangle player = new Rectangle(Game.player.getX(), Game.player.getY(), w, h);
+		if (enemy.intersects(player)) {
+			Game.player.setDamage(1);
+		}
+		return enemy.intersects(player);		
+	}
+	
 	private void move() {
 		int plx = Game.player.getX();
 		int ply = Game.player.getY();
 		
-		if (plx > x && isRFree) {
+		if (plx+1 > x && isRFree) {
 			x += speed;
-		}else  if (plx < x && isLFree) {
+		}else  if (plx-1 < x && isLFree) {
 			x -= speed;			
 		}
-		if (ply < y && isUFree) {
+		if (ply+1 < y && isUFree) {
 			y -= speed;		
-		}else if (ply > y && isDFree) {
+		}else if (ply-1 > y && isDFree) {
 			y += speed;
 		}
 	}		
@@ -95,7 +110,8 @@ public class Enemy extends Entity {
 	public void update() {
 		animate();
 		arround();
-		move();
+		if (!isCollidingWithPlayer())
+			move();
 	}
 
 	public void render(Graphics g) {
