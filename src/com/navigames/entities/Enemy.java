@@ -92,14 +92,14 @@ public class Enemy extends Entity {
 		int plx = Game.player.getX();
 		int ply = Game.player.getY();
 		
-		if (plx+1 > x && isRFree) {
+		if (plx > x+1 && isRFree) {
 			x += speed;
-		}else  if (plx-1 < x && isLFree) {
+		}else  if (plx < x-1 && isLFree) {
 			x -= speed;			
 		}
-		if (ply+1 < y && isUFree) {
+		if (ply < y-1 && isUFree) {
 			y -= speed;		
-		}else if (ply-1 > y && isDFree) {
+		}else if (ply > y+1 && isDFree) {
 			y += speed;
 		}
 	}		
