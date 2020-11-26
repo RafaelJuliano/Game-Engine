@@ -2,6 +2,7 @@ package com.navigames.main;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.navigames.entities.Entity;
 import com.navigames.entities.Player;
 import com.navigames.graficos.Spritesheet;

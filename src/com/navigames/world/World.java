@@ -8,6 +8,12 @@ import com.navigames.entities.*;
 import com.navigames.main.Game;
 import com.navigames.main.GameScreen;
 
+/**
+ * Utiliza uma imagem para definir automaticamente as posições de cada tile e entidade do jogo.
+ * Também utiliza posições da câmera para otimizar a renderização do mapa.
+ * @author Rafael Juliano Ferreira
+ *
+ */
 public class World {
 
 	private Tile[] tiles;
@@ -24,6 +30,11 @@ public class World {
 
 	private BufferedImage map;
 
+	/**
+	 * Faz a leitura de uma imagem e verifica a cor RGB de cada pixel armazenando em um vetor int
+	 * com os respectivos valores em hexadecial.
+	 * @param path Recebe o caminho da imagem.
+	 */
 	public World(String path) {
 		try {
 			map = ImageIO.read(getClass().getResource(path));
@@ -40,6 +51,13 @@ public class World {
 		drawMap();		
 	}
 	
+	/**
+	 * Utiliza um aninhamento de for para converter o index de pixels[] em posições X e Y.
+	 * Faz a verificação do código hexadecimal e define a posição e tipo do objeto no mapa.
+	 * Após este processo, cada pixel do mapa de referencia, se torna uma imagem de 16 pixels,
+	 * sendo necessário prestar atenção a esta conversão em outros métodos.
+	 * Por padrão todo, todo tile é "chão" no inicio da verificação.
+	 */
 	private void drawMap() {
 		for (int yy = 0; yy < HEIGHT; yy++) {
 			for (int xx = 0; xx < WIDTH; xx++) {
@@ -82,9 +100,12 @@ public class World {
 		}
 	}
 
+	/**
+	 * Verifica quais tiles estão visiveis no canvas e as renderiza.
+	 */
 	public void render(Graphics g) {
-		int xstart = Camera.x / 16;
-		int ystart = Camera.y / 16;
+		int xstart = Camera.getX() / 16;
+		int ystart = Camera.getY() / 16;
 		int xfinal = xstart + GameScreen.WIDTH / 16;
 		int yfinal = ystart + GameScreen.HEIGHT / 16;
 		for (int xx = xstart; xx <= xfinal; xx++) {

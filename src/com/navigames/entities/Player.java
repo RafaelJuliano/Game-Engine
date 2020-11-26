@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import com.navigames.main.Game;
 import com.navigames.main.GameInput;
 import com.navigames.main.GameScreen;
-import com.navigames.world.World;
 
 /**
  * Responável pela lógica e renderização da entidade controlada pelo jogador.
@@ -84,11 +83,10 @@ public class Player extends Entity {
 	}
 	
 	/**
-	 * Define posição da camera do jogo.
+	 * Define as posições do player como referencia para movimentação da câmera.
 	 */
 	public void moveCamera() {
-		Camera.x = Camera.clamp(this.getX() - (GameScreen.WIDTH / 2), 0, World.WIDTH * 16 - GameScreen.WIDTH);
-		Camera.y = Camera.clamp(this.getY() - (GameScreen.HEIGHT / 2), 0, World.HEIGHT * 16 - GameScreen.HEIGHT);
+		Camera.move(this.getX() - (GameScreen.WIDTH / 2), this.getY() - (GameScreen.HEIGHT / 2));
 	}
 
 	/**
@@ -106,9 +104,9 @@ public class Player extends Entity {
 	 */
 	public void render(Graphics g) {
 		if (direcao) {
-			g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.drawImage(rightPlayer[index], Camera.posX(this.getX()), Camera.posY(this.getY()), null);
 		} else if (direcao == false) {
-			g.drawImage(leftPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.drawImage(leftPlayer[index], Camera.posX(this.getX()), Camera.posY(this.getY()), null);
 		}
 	}
 }

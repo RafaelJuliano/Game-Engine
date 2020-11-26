@@ -17,6 +17,9 @@ public class Enemy extends Entity {
 		}
 	}
 
+	/**
+	 * Faz com que a cada x frames, o sprite de renderização seja alterado.
+	 */
 	private void animate() {
 		frames++;
 		if (frames == maxFrames) {
@@ -27,11 +30,14 @@ public class Enemy extends Entity {
 		}
 	}
 
+	/**
+	 * Executa toda lógica do objeto.
+	 */
 	public void update() {
 		animate();
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(enemySprite[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		g.drawImage(enemySprite[index], Camera.posX(this.getX()), Camera.posY(this.getY()), null);
 	}
 }

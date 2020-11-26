@@ -91,6 +91,6 @@ public class Entity {
 	 * @param g BufferedImage a qual o sprite é renderizado.
 	 */
 	public void render(Graphics g) {
-		g.drawImage(sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		g.drawImage(sprite, Camera.posX(this.getX()), Camera.posY(this.getY()), null);
 	}
 }
