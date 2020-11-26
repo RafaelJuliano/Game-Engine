@@ -3,8 +3,6 @@ package com.navigames.entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import javax.xml.crypto.Data;
-
 import com.navigames.main.Game;
 import com.navigames.main.GameInput;
 import com.navigames.main.GameScreen;
