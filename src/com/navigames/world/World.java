@@ -86,7 +86,9 @@ public class World {
 					Game.player.setY(posY);
 					break;
 				case ENEMY:
-					Game.entities.add(new Enemy(posX, posY, D_SIZE, D_SIZE, Entity.ENEMY_EN));
+					Enemy enemy = new Enemy(posX, posY, D_SIZE, D_SIZE, Entity.ENEMY_EN);
+					Game.enemies.add(enemy);
+					Game.entities.add(enemy);
 					break;
 				case WEAPON:
 					Game.entities.add(new Wepon(posX, posY, D_SIZE, D_SIZE, Entity.WEAPON_EN));
@@ -137,10 +139,10 @@ public class World {
 	 * @return Valor booleano.
 	 */
 	public static boolean isWall(int x, int y, int p) {
-		int index1 = indexS(x + p, y);
-		int index2 = indexS(x + D_SIZE - p, y);
-		int index3 = indexS(x + p, y + D_SIZE);
-		int index4 = indexS(x + D_SIZE - p, y + D_SIZE);
+		int index1 = indexS(x + p, y +1);
+		int index2 = indexS(x + D_SIZE - p, y +1);
+		int index3 = indexS(x + p, y + D_SIZE -1);
+		int index4 = indexS(x + D_SIZE - p, y + D_SIZE-1);
 		if (tiles[index1] instanceof WallTile || tiles[index2] instanceof WallTile || tiles[index3] instanceof WallTile
 				|| tiles[index4] instanceof WallTile) {
 			return true;

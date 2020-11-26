@@ -107,16 +107,15 @@ public class Player extends Entity {
 	/**
 	 * Chama todos os métodos responsáveis pela lógica do player.
 	 */
-	public void update() {
-		move();
+	public void update() {		
 		animate();
 		moveCamera();
 		arround();
+		move();
 	}
 
 	/**
-	 * Desenha o sprite do player na variável image da classe GameScreen.
-	 * 
+	 * Desenha o sprite do player na variável image da classe GameScreen.	 * 
 	 * @param g BufferedImage a qual o sprite é renderizado.
 	 */
 	public void render(Graphics g) {

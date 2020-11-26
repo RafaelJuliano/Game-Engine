@@ -3,6 +3,7 @@ package com.navigames.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.navigames.entities.Enemy;
 import com.navigames.entities.Entity;
 import com.navigames.entities.Player;
 import com.navigames.graficos.Spritesheet;
@@ -17,6 +18,7 @@ public class Game implements Runnable {
 
 	private Thread thread;
 	private boolean isRunning = true;
+	public static List<Enemy> enemies;
 	public static List<Entity> entities;
 	public static Spritesheet spritesheet;
 	public static World world;
@@ -33,6 +35,7 @@ public class Game implements Runnable {
 		input = new GameInput();
 		screen = new GameScreen();
 		screen.initFrame();
+		enemies = new ArrayList<Enemy>();
 		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
 		player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, World.D_SIZE, World.D_SIZE));

@@ -49,6 +49,7 @@ public class GameScreen extends Canvas {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		requestFocus();
 	}
 	
 	/**
