@@ -3,16 +3,17 @@ package com.navigames.entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import com.navigames.main.Game;
+import com.navigames.world.World;
 
 /**
  * Classe pai de todas as entidades do jogo.
  * @author Rafael Juliano Ferreira
  */
 public class Entity {    
-	public static BufferedImage LIFEPACK_EN = Game.spritesheet.getSprite(6*16, 0, 16, 16);
-	public static BufferedImage WEAPON_EN = Game.spritesheet.getSprite(7*16, 0, 16, 16);
-	public static BufferedImage BULLET_EN = Game.spritesheet.getSprite(6*16, 16, 16, 16);
-	public static BufferedImage ENEMY_EN =  Game.spritesheet.getSprite(2*16, 2*16, 16, 16);	
+	public static BufferedImage LIFEPACK_EN = Game.spritesheet.getSprite(6*16, 0, World.D_SIZE, World.D_SIZE);
+	public static BufferedImage WEAPON_EN = Game.spritesheet.getSprite(7*16, 0, World.D_SIZE, World.D_SIZE);
+	public static BufferedImage BULLET_EN = Game.spritesheet.getSprite(6*16, 16, World.D_SIZE, World.D_SIZE);
+	public static BufferedImage ENEMY_EN =  Game.spritesheet.getSprite(2*16, 2*16, World.D_SIZE, World.D_SIZE);	
 	protected double x;
 	protected double y;
 	protected int width;

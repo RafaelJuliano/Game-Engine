@@ -3,6 +3,7 @@ package com.navigames.entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import com.navigames.main.Game;
+import com.navigames.world.World;
 
 public class Enemy extends Entity {
 
@@ -13,7 +14,7 @@ public class Enemy extends Entity {
 		super(x, y, width, height, sprite);
 		enemySprite = new BufferedImage[4];
 		for (int i = 0; i < 4; i++) {
-			enemySprite[i] = Game.spritesheet.getSprite(2 * 16 + (i * 16), 2 * 16, 16, 16);
+			enemySprite[i] = Game.spritesheet.getSprite(2 * 16 + (i * 16), 2 * 16, World.D_SIZE, World.D_SIZE);
 		}
 	}
 

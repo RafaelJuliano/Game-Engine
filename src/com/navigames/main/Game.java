@@ -35,7 +35,7 @@ public class Game implements Runnable {
 		screen.initFrame();
 		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
-		player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
+		player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, World.D_SIZE, World.D_SIZE));
 		world = new World("/map.png");
 		entities.add(player);
 	}
