@@ -17,7 +17,7 @@ public class Enemy extends Entity {
 	private int damage = 5;
 	private double speed = 0.4;
 	private boolean isRFree, isLFree, isUFree, isDFree, isRBlck, isLBlck, isUBlck, isDBlck, isLNotWall, isUNotWall;
-
+	private double playerDistance;
 	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		enemySprite = new BufferedImage[4];
@@ -103,6 +103,7 @@ public class Enemy extends Entity {
 	private void move() {
 		int plx = Game.player.getX();
 		int ply = Game.player.getY();
+		
 
 		if (count <= 0) {
 			count = rand.nextInt(1500);
@@ -123,8 +124,7 @@ public class Enemy extends Entity {
 		} else if (ply > (int) y && isDFree) {
 			y += speed;
 		}
-		count--;
-		
+		count--;		
 	}
 
 	/**
@@ -133,7 +133,8 @@ public class Enemy extends Entity {
 	public void update() {
 		animate();
 		arround();
-		if (!isCollidingWithPlayer())
+		playerDistance = x - Game.player.getX();
+		if (!isCollidingWithPlayer() && playerDistance < 320)
 			move();
 	}
 
