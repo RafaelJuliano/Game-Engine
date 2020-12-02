@@ -72,7 +72,7 @@ public class GameScreen extends Canvas {
 			Entity e = Game.entities.get(i);
 			e.render(g);
 		}
-
+		Game.ui.render(g);
 		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), null);

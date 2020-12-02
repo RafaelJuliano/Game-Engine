@@ -24,7 +24,8 @@ public class Player extends Entity {
 	private BufferedImage[] rightDmgPlayer;
 	private BufferedImage[] leftDmgPlayer;
 	private boolean isRFree, isLFree, isUFree, isDFree;
-	private int life = 10, cooldown = 0, damage = 0;
+	private int cooldown = 0, damage = 0;
+	private int life = 50, maxLife = 50;
 
 	/**
 	 * 
@@ -87,13 +88,19 @@ public class Player extends Entity {
 		this.damage = damage;
 	}
 	
+	public int getLife() {
+		return this.life;
+	}
+	
+	public int getMaxLife() {
+		return this.maxLife;
+	}
+	
 	private void damage() {
 		if (cooldown <= 0) {
 			if (damage > 0) {
 				life -= damage;
 				damage = 0;
-				System.out.println(life);
-				System.out.println(damage);
 				cooldown = 120;
 			}
 		}else {
@@ -145,7 +152,7 @@ public class Player extends Entity {
 		move();
 		damage();
 		if (life == 0) {
-			System.exit(1);
+			//System.exit(1);
 		}
 	}
 

@@ -3,15 +3,20 @@ package com.navigames.entities;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Random;
+
 import com.navigames.main.Game;
 import com.navigames.world.World;
 
 public class Enemy extends Entity {
 
 	private static BufferedImage[] enemySprite;
+	Random rand = new Random();
 	private int frames = 0, maxFrames = 12, index = 0, maxIndex = 3;
-	private double speed = 0.4;
-	private boolean isRFree, isLFree, isUFree, isDFree;
+	private int count = rand.nextInt(1000);
+	private int damage = 5;
+	private double speed = 0.8;
+	private boolean isRFree, isLFree, isUFree, isDFree, isRBlck, isLBlck, isUBlck, isDBlck;
 
 	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -47,6 +52,11 @@ public class Enemy extends Entity {
 		isLFree = World.isWall(left[0], left[1], 2) ? false : isColliding(left[0], left[1], 8)? false:true;
 		isUFree = World.isWall(up[0], up[1], 2) ? false : isColliding(up[0], up[1], 8)? false:true;
 		isDFree = World.isWall(down[0], down[1], 2) ? false : isColliding(down[0], down[1], 8)? false:true;
+		
+		isRBlck = World.isWall(right[0]+1, right[1]+1, 2);
+		isLBlck = World.isWall(left[0]-1, left[1], 2);
+		isUBlck = World.isWall(up[0], up[1], 2);
+		isDBlck = World.isWall(down[0]-1, down[1], 2);
 	}
 	
 	/**
@@ -83,7 +93,7 @@ public class Enemy extends Entity {
 		Rectangle enemy = new Rectangle(this.getX(), this.getY(), w, h);
 		Rectangle player = new Rectangle(Game.player.getX(), Game.player.getY(), w, h);
 		if (enemy.intersects(player)) {
-			Game.player.setDamage(1);
+			Game.player.setDamage(damage);
 		}
 		return enemy.intersects(player);		
 	}
@@ -92,16 +102,26 @@ public class Enemy extends Entity {
 		int plx = Game.player.getX();
 		int ply = Game.player.getY();
 		
-		if (plx > x+1 && isRFree) {
-			x += speed;
-		}else  if (plx < x-1 && isLFree) {
+		if (count <= 0) {
+			count = rand.nextInt(1500);
+		}		
+		
+		if (count > 450 && isDBlck && ply > (int)y && isLFree || count > 450 && isUBlck && ply < (int)y  && isLFree) {
 			x -= speed;			
-		}
-		if (ply < y-1 && isUFree) {
-			y -= speed;		
-		}else if (ply > y+1 && isDFree) {
+		}else if (plx > (int)x && isRFree) {
+			x += speed;
+		}else  if (plx < (int)x && isLFree) {
+			x -= speed;
+		}		
+		
+		if (count > 450 && isRBlck && plx > (int)x && isUFree || count > 450 && isLBlck && plx < (int)x  && isUFree ) {
+			y -= speed;
+		}else if (ply < (int)y && isUFree) {		
+			y -= speed;
+		}else if (ply > (int)y && isDFree) {
 			y += speed;
 		}
+		count--;
 	}		
 
 	/**

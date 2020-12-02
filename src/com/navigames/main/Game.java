@@ -7,6 +7,7 @@ import com.navigames.entities.Enemy;
 import com.navigames.entities.Entity;
 import com.navigames.entities.Player;
 import com.navigames.graficos.Spritesheet;
+import com.navigames.graficos.UI;
 import com.navigames.world.World;
 
 /**
@@ -25,6 +26,7 @@ public class Game implements Runnable {
 	public static Player player;
 	public GameScreen screen;
 	public static GameInput input;
+	public static UI ui;
 
 	public static void main(String[] args) {
 		Game main = new Game();
@@ -39,7 +41,8 @@ public class Game implements Runnable {
 		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
 		player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, World.D_SIZE, World.D_SIZE));
-		world = new World("/map.png");
+		world = new World("/map2.png");
+		ui = new UI();
 		entities.add(player);
 	}
 

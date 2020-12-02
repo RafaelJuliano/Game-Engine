@@ -68,6 +68,22 @@ public class Entity {
 	}
 	
 	/**
+     * Retorna o valor de x da entidade
+     * @return Valor x do tipo double.
+     */
+	public double getDX() {
+		return this.x;
+	}
+	
+	/**
+	 * Retorna o valor de y da entidade
+	 * @return Valor y do tipo double.
+	 */
+	public double getDY() {
+		return this.y;
+	}
+	
+	/**
 	 * Retorna o valor de width da entidade
 	 * @return int width
 	 */
